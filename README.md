@@ -2,7 +2,7 @@
 The take home project work for dva interview
 Instructions to run the application:
 1. Download the zip file, from https://github.com/joniqfzhang/DavInterviewSpringMVCMavenProject.git
-2. Exract the zip file to a folder
+2. Extract the zip file to a folder
 3. Open command line window, build the project with maven at the folder location:
     mvn package
 4. Run the project from the command line window, at the folder location:
