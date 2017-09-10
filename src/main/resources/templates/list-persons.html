@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<title>List Persons Page</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("button").click(function() {
+			var divId = "claims-" + $(this).attr('id');//alert(divId);
+			$.ajax({
+				url : "person/" + $(this).attr('id'),
+				success : function(data) {//alert(data);
+					//$("#" + divId).html("<p>Claims:</p>" + data);
+					$("#claims").html("<p>Claims:</p>" + data);
+				},
+				error : function() {
+					alert("Retrive data error.");
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Home</a></li>
+					<li class="active"><a href="persons">Persons</a></li>
+					<li><a href="claims">Claims</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="jumbotron-fluid">
+		<div class="container text-center">
+			<h2>Person List</h2>
+		</div>
+	</div>
+	<div class="container table-responsive">
+		<div th:if="${not #lists.isEmpty(persons)}">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Claims Number</th>
+						<th>Claims</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="person : ${persons}">
+						<td th:text="${person.id}"></td>
+						<td th:text="${person.name}"></td>
+						<td th:text="${person.email}"></td>
+						<td th:text="${person.phone}"></td>
+						<td th:text="${#lists.size(person.claims)}"></td>
+						<td><button type="button" class="btn btn-info"
+								data-toggle="collapse" data-target="#claims"
+								th:id="${person.id}" >Details</button>						
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+		
+	<footer class="container-fluid text-center">
+		<p>
+			<div id="claims" class="collapse" ></div>
+		</p>
+	</footer>
+</body>
+</html>
